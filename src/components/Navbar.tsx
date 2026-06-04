@@ -118,11 +118,12 @@ export default function Navbar() {
               {/* Resume Button */}
               <motion.a
                 href={personalInfo.resumeUrl}
-                download
+                target="_blank"
+                rel="noopener noreferrer"
+                id="nav-resume-download"
                 className="hidden sm:flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-medium bg-brand-500/10 text-brand-400 border border-brand-500/20 hover:bg-brand-500/20 transition-all duration-200"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                id="nav-resume-download"
               >
                 <Download size={14} />
                 Resume

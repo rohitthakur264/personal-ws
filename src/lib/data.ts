@@ -8,7 +8,7 @@ export const personalInfo = {
   location: "Pune, Maharashtra, India",
   linkedin: "https://linkedin.com/in/rohit-thakur-ml",
   github: "https://github.com/rohitthakur264",
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "/resume",
 };
 
 export const about = {

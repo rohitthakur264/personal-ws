@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { Mail, Phone, Download, ArrowRight, MapPin } from "lucide-react";
 import { LinkedInIcon, GithubIcon } from "@/components/icons";
@@ -226,14 +227,15 @@ export default function Hero() {
             <motion.div variants={fadeUp} className="flex flex-wrap gap-3 mb-8">
               <motion.a
                 href={personalInfo.resumeUrl}
-                download
+                target="_blank"
+                rel="noopener noreferrer"
                 id="hero-resume-download"
                 className="btn-primary"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
               >
                 <Download size={16} />
-                Download Resume
+                View Resume
               </motion.a>
               <motion.button
                 onClick={handleContact}
@@ -304,25 +306,24 @@ export default function Hero() {
                   style={{ background: "#7c3aed", boxShadow: "0 0 8px rgba(124,58,237,0.7)" }} />
               </motion.div>
 
-              {/* Avatar */}
+              {/* Avatar with real photo */}
               <motion.div
-                className="absolute inset-8 rounded-full overflow-hidden flex items-center justify-center"
+                className="absolute inset-8 rounded-full overflow-hidden"
                 style={{
-                  background: "linear-gradient(135deg, rgba(96,86,245,0.3), rgba(124,58,237,0.3))",
-                  border: "2px solid rgba(96,86,245,0.35)",
-                  backdropFilter: "blur(8px)",
+                  border: "3px solid rgba(96,86,245,0.5)",
+                  boxShadow: "0 0 40px rgba(96,86,245,0.3), 0 0 80px rgba(124,58,237,0.15)",
                 }}
                 animate={{ y: [-6, 6, -6] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
               >
-                <div
-                  className="w-full h-full flex items-center justify-center"
-                  style={{ background: "linear-gradient(135deg, #5040e8, #7c3aed, #ec4899)" }}
-                >
-                  <span className="font-display font-bold text-white select-none" style={{ fontSize: "5rem" }}>
-                    RT
-                  </span>
-                </div>
+                <Image
+                  src="/profile.png"
+                  alt="Rohit Thakur — ML Engineer & Data Scientist"
+                  fill
+                  priority
+                  style={{ objectFit: "cover", objectPosition: "center top" }}
+                  sizes="(max-width: 768px) 200px, 280px"
+                />
               </motion.div>
 
               {/* Floating badges */}

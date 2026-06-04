@@ -7,7 +7,7 @@ import { personalInfo } from "@/lib/data";
 const icons = [
   { href: personalInfo.github, Icon: GithubIcon, label: "GitHub" },
   { href: personalInfo.linkedin, Icon: LinkedInIcon, label: "LinkedIn" },
-  { href: `mailto:${personalInfo.email}`, Icon: Mail, label: "Email" },
+  { href: `mailto:${personalInfo.email}?subject=Inquiry%20-%20AI%2FML%20Portfolio`, Icon: Mail, label: "Email" },
 ];
 
 export default function Footer() {

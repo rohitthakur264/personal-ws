@@ -39,7 +39,7 @@ export default function Contact() {
               </h3>
               
               {[
-                { icon: Mail,         text: personalInfo.email,              href: `mailto:${personalInfo.email}` },
+                { icon: Mail,         text: personalInfo.email,              href: `mailto:${personalInfo.email}?subject=Inquiry%20-%20AI%2FML%20Portfolio` },
                 { icon: Phone,        text: personalInfo.phone,              href: `tel:${personalInfo.phone}` },
                 { icon: MapPin,       text: "Pune, Maharashtra, India",      href: null },
                 { icon: GithubIcon,   text: "github.com/rohitthakur264",     href: personalInfo.github },

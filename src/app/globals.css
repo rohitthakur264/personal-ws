@@ -190,9 +190,6 @@ body {
 }
 
 @media(min-width: 900px) {
-  .hero-grid { grid-template-columns: 1fr auto !important; }
-  .hero-text { order: 1 !important; }
-  .hero-photo { order: 2 !important; justify-content: flex-end !important; }
   .email-text { display: inline !important; }
   .edu-grid { grid-template-columns: 1fr 1fr !important; }
 }

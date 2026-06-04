@@ -1,111 +1,69 @@
 "use client";
-
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { education } from "@/lib/data";
-import { GraduationCap, MapPin, Calendar, BookOpen, Star } from "lucide-react";
+import { GraduationCap, Trophy } from "lucide-react";
 
 export default function Education() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="education" className="section-padding bg-[rgb(var(--surface))]">
-      <div className="section-container" ref={ref}>
-        {/* Header */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="section-tag">
-            <GraduationCap size={14} />
-            Education
-          </span>
-          <h2 className="section-title font-display">
-            Academic <span className="gradient-text">Foundation</span>
-          </h2>
+    <section id="education" className="section" style={{ borderTop: "1px solid rgb(var(--border))" }}>
+      <div className="container" ref={ref}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5 }} style={{ marginBottom: "3rem" }}>
+          <p className="section-label">Education</p>
+          <h2 className="section-heading">Academic Background</h2>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="max-w-3xl mx-auto">
-          {education.map((edu, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: -40 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.2, duration: 0.7, ease: "easeOut" }}
-              className="relative pl-12"
-            >
-              {/* Timeline dot */}
-              <div className="absolute left-0 top-6 w-8 h-8 rounded-full bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center shadow-lg shadow-brand-500/30 z-10">
-                <GraduationCap size={16} className="text-white" />
-              </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1.25rem" }} className="edu-grid">
 
-              {/* Card */}
-              <div className="card hover:border-brand-500/30 group">
-                {/* Top gradient bar */}
-                <div className="h-1 w-full rounded-full bg-gradient-to-r from-brand-500 to-purple-500 mb-5 -mt-2 -mx-0 opacity-80" />
-
-                <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
-                  <div>
-                    <h3 className="font-display font-bold text-xl mb-1">
-                      {edu.degree}
+          {/* Degree */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5 }}>
+            <div className="card" style={{ borderLeft: "3px solid #6366f1" }}>
+              <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                <div style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(99,102,241,.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <GraduationCap size={20} style={{ color: "#6366f1" }} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: ".5rem", marginBottom: ".375rem" }}>
+                    <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.0625rem", color: "rgb(var(--text))" }}>
+                      B.Tech — Artificial Intelligence &amp; Machine Learning
                     </h3>
-                    <p className="font-semibold text-brand-400 text-base">
-                      {edu.institution}
-                    </p>
+                    <span style={{ fontSize: ".75rem", fontWeight: 700, color: "#6366f1", background: "rgba(99,102,241,.1)", padding: ".2rem .625rem", borderRadius: 9999 }}>CGPA: 8.42</span>
                   </div>
-
-                  {/* CGPA Badge */}
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-br from-brand-500/10 to-purple-500/10 border border-brand-500/20">
-                    <Star size={14} className="text-yellow-400" />
-                    <div>
-                      <div className="text-xs text-[rgb(var(--muted))]">CGPA</div>
-                      <div className="font-display font-bold text-lg gradient-text">
-                        {edu.cgpa}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Meta info */}
-                <div className="flex flex-wrap gap-4 mb-5 text-sm text-[rgb(var(--muted))]">
-                  <span className="flex items-center gap-1.5">
-                    <MapPin size={14} className="text-brand-400" />
-                    {edu.location}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <Calendar size={14} className="text-brand-400" />
-                    {edu.period}
-                  </span>
-                </div>
-
-                {/* Relevant Coursework */}
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <BookOpen size={14} className="text-[rgb(var(--muted))]" />
-                    <span className="text-sm font-medium text-[rgb(var(--muted))]">
-                      Relevant Coursework
-                    </span>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {edu.coursework.map((course) => (
-                      <span
-                        key={course}
-                        className="px-3 py-1 rounded-full text-xs font-medium bg-[rgb(var(--surface-2))] text-[rgb(var(--muted))] border border-[rgb(var(--border))] hover:border-brand-500/30 hover:text-brand-400 transition-colors"
-                      >
-                        {course}
-                      </span>
-                    ))}
-                  </div>
+                  <p style={{ fontSize: ".9375rem", fontWeight: 600, color: "#6366f1", marginBottom: ".375rem" }}>Vishwakarma University</p>
+                  <p style={{ fontSize: ".8125rem", color: "rgb(var(--muted))", marginBottom: ".75rem" }}>Pune, Maharashtra · Aug 2023 – May 2027</p>
+                  <p style={{ fontSize: ".8125rem", color: "rgb(var(--muted))", lineHeight: 1.6 }}>
+                    <strong style={{ color: "rgb(var(--text))" }}>Relevant Coursework: </strong>
+                    Machine Learning, Deep Learning, Computer Vision, NLP, Statistical Methods, Data Structures &amp; Algorithms, Database Systems
+                  </p>
                 </div>
               </div>
-            </motion.div>
-          ))}
+            </div>
+          </motion.div>
+
+          {/* Achievement */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5, delay: .1 }}>
+            <div className="card" style={{ borderLeft: "3px solid #f59e0b" }}>
+              <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                <div style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(245,158,11,.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Trophy size={20} style={{ color: "#f59e0b" }} />
+                </div>
+                <div>
+                  <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.0625rem", color: "rgb(var(--text))", marginBottom: ".25rem" }}>
+                    🏆 1st Place — World Water Day Hackathon
+                  </h3>
+                  <p style={{ fontSize: ".875rem", fontWeight: 600, color: "#f59e0b", marginBottom: ".375rem" }}>WILO × Vishwakarma University</p>
+                  <p style={{ fontSize: ".8125rem", color: "rgb(var(--muted))", lineHeight: 1.6 }}>
+                    Outperformed 50+ teams with an end-to-end data-driven water sustainability monitoring solution — ingestion, EDA, statistical modeling, and interactive dashboard.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
+      <style>{`@media(min-width:900px){.edu-grid{grid-template-columns:1fr 1fr !important;}}`}</style>
     </section>
   );
 }

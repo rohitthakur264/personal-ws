@@ -1,104 +1,32 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Mail, ArrowUp, Heart } from "lucide-react";
-import { LinkedInIcon, GithubIcon } from "@/components/icons";
-import { personalInfo, navLinks } from "@/lib/data";
+import { Github, Linkedin, Mail } from "lucide-react";
+import { personalInfo } from "@/lib/data";
 
 export default function Footer() {
-  const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
-
   return (
-    <footer className="border-t border-[rgb(var(--border))] bg-[rgb(var(--background))]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center">
-                <span className="font-display font-bold text-white text-sm">RT</span>
-              </div>
-              <span className="font-display font-semibold text-lg">Rohit Thakur</span>
-            </div>
-            <p className="text-sm text-[rgb(var(--muted))] leading-relaxed max-w-xs">
-              ML Engineer · Data Scientist · AI Developer. Passionate about building intelligent systems that create real-world impact.
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-display font-semibold text-sm mb-4 text-[rgb(var(--foreground))]">
-              Quick Links
-            </h4>
-            <ul className="space-y-2">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <button
-                    onClick={() => document.querySelector(link.href)?.scrollIntoView({ behavior: "smooth" })}
-                    className="text-sm text-[rgb(var(--muted))] hover:text-brand-400 transition-colors link-underline"
-                  >
-                    {link.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Social & Contact */}
-          <div>
-            <h4 className="font-display font-semibold text-sm mb-4 text-[rgb(var(--foreground))]">
-              Connect
-            </h4>
-            <div className="flex gap-3 mb-4">
-              {[
-                { href: personalInfo.github, icon: GithubIcon, label: "GitHub", id: "footer-github" },
-                { href: personalInfo.linkedin, icon: LinkedInIcon, label: "LinkedIn", id: "footer-linkedin" },
-                { href: `mailto:${personalInfo.email}`, icon: Mail, label: "Email", id: "footer-email" },
-              ].map(({ href, icon: Icon, label, id }) => (
-                <motion.a
-                  key={id}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  id={id}
-                  aria-label={label}
-                  className="w-9 h-9 flex items-center justify-center rounded-xl glass text-[rgb(var(--muted))] hover:text-brand-400 hover:border-brand-500/30 transition-all"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Icon size={16} />
-                </motion.a>
-              ))}
-            </div>
-            <p className="text-xs text-[rgb(var(--muted))]">
-              {personalInfo.email}
-            </p>
-            <p className="text-xs text-[rgb(var(--muted))] mt-1">
-              {personalInfo.location}
-            </p>
-          </div>
+    <footer style={{ borderTop: "1px solid rgb(var(--border))", padding: "2rem 1.5rem" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "1rem" }}>
+        <div>
+          <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: ".9375rem", color: "rgb(var(--text))", marginBottom: ".25rem" }}>Rohit Thakur</p>
+          <p style={{ fontSize: ".8125rem", color: "rgb(var(--muted))" }}>AI & Machine Learning Engineer · Pune, India</p>
         </div>
-
-        {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[rgb(var(--border))]">
-          <p className="text-xs text-[rgb(var(--muted))] flex items-center gap-1">
-            © {new Date().getFullYear()} Rohit Thakur. Built with{" "}
-            <Heart size={11} className="text-rose-400 fill-rose-400" />
-            using Next.js & Framer Motion.
-          </p>
-
-          {/* Back to top */}
-          <motion.button
-            onClick={scrollTop}
-            id="back-to-top"
-            aria-label="Back to top"
-            className="w-9 h-9 flex items-center justify-center rounded-xl glass text-[rgb(var(--muted))] hover:text-brand-400 hover:border-brand-500/30 transition-all"
-            whileHover={{ scale: 1.1, y: -2 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <ArrowUp size={16} />
-          </motion.button>
+        <div style={{ display: "flex", gap: ".75rem", alignItems: "center" }}>
+          {[
+            { href: personalInfo.github, Icon: Github, label: "GitHub" },
+            { href: personalInfo.linkedin, Icon: Linkedin, label: "LinkedIn" },
+            { href: `mailto:${personalInfo.email}`, Icon: Mail, label: "Email" },
+          ].map(({ href, Icon, label }) => (
+            <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
+              style={{ width: 34, height: 34, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgb(var(--border))", borderRadius: 8, color: "rgb(var(--muted))", transition: "color .2s, border-color .2s", textDecoration: "none" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#6366f1"; (e.currentTarget as HTMLElement).style.borderColor = "#6366f1"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgb(var(--muted))"; (e.currentTarget as HTMLElement).style.borderColor = "rgb(var(--border))"; }}
+            >
+              <Icon size={15} />
+            </a>
+          ))}
         </div>
+        <p style={{ fontSize: ".75rem", color: "rgb(var(--muted))", width: "100%", textAlign: "center" }}>
+          © {new Date().getFullYear()} Rohit Thakur. Built with Next.js &amp; Tailwind CSS.
+        </p>
       </div>
     </footer>
   );

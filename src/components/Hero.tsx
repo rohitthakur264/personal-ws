@@ -2,234 +2,175 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { TypeAnimation } from "react-type-animation";
-import { Mail, MapPin, ArrowRight, Download } from "lucide-react";
-import { LinkedInIcon, GithubIcon } from "@/components/icons";
+import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
 import { personalInfo } from "@/lib/data";
-import { useEffect, useRef } from "react";
 
-// Subtle canvas particle background
-function ParticleCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    let animId: number;
-    const pts: { x: number; y: number; vx: number; vy: number }[] = [];
-
-    const init = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      pts.length = 0;
-      const n = Math.floor((canvas.width * canvas.height) / 18000);
-      for (let i = 0; i < n; i++)
-        pts.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3 });
-    };
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < pts.length; i++) {
-        const p = pts[i];
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-        for (let j = i + 1; j < pts.length; j++) {
-          const q = pts[j];
-          const d = Math.hypot(p.x - q.x, p.y - q.y);
-          if (d < 140) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(79,70,229,${0.07 * (1 - d / 140)})`;
-            ctx.lineWidth = 0.6;
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(q.x, q.y);
-            ctx.stroke();
-          }
-        }
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(79,70,229,0.18)";
-        ctx.fill();
-      }
-      animId = requestAnimationFrame(draw);
-    };
-    init(); draw();
-    const ro = new ResizeObserver(init);
-    ro.observe(canvas);
-    return () => { cancelAnimationFrame(animId); ro.disconnect(); };
-  }, []);
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ zIndex: 0 }} />;
-}
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] } },
-};
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
-};
+const socials = [
+  { href: personalInfo.github, icon: Github, label: "GitHub", id: "hero-github" },
+  { href: personalInfo.linkedin, icon: Linkedin, label: "LinkedIn", id: "hero-linkedin" },
+  { href: `mailto:${personalInfo.email}`, icon: Mail, label: "Email", id: "hero-email" },
+];
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden" style={{ background: "rgb(var(--background))" }}>
-      <ParticleCanvas />
-
-      {/* Soft top gradient */}
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 70% 40% at 60% -10%, rgba(79,70,229,0.08), transparent)", zIndex: 1 }} />
-      <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none" style={{ background: "linear-gradient(to top, rgb(var(--background)), transparent)", zIndex: 1 }} />
-
-      <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16" style={{ zIndex: 2 }}>
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-
-          {/* ── Left: Content ── */}
-          <motion.div variants={stagger} initial="hidden" animate="visible" className="order-2 lg:order-1">
-
-            {/* Status pill */}
-            <motion.div variants={fadeUp}>
-              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold mb-7 tracking-wide" style={{ background: "rgba(16,185,129,0.07)", color: "#059669", border: "1px solid rgba(16,185,129,0.18)" }}>
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#059669" }} />
-                Available for Opportunities
-              </span>
-            </motion.div>
+    <section
+      id="hero"
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        background: "rgb(var(--bg))",
+        padding: "0 1.5rem",
+        paddingTop: "5rem",
+      }}
+    >
+      <div style={{ maxWidth: 1100, margin: "0 auto", width: "100%" }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "1fr",
+          gap: "3rem",
+          alignItems: "center",
+        }}
+          className="hero-grid"
+        >
+          {/* ── Text ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            style={{ order: 2 }}
+            className="hero-text"
+          >
+            {/* Available badge */}
+            <div style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", padding: ".35rem .875rem", background: "rgba(16,185,129,.07)", border: "1px solid rgba(16,185,129,.18)", borderRadius: 9999, marginBottom: "1.5rem" }}>
+              <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#10b981", display: "inline-block" }} />
+              <span style={{ fontSize: ".8125rem", fontWeight: 600, color: "#10b981", letterSpacing: ".02em" }}>Available for Opportunities</span>
+            </div>
 
             {/* Name */}
-            <motion.h1 variants={fadeUp} className="font-display font-bold leading-[1.1] mb-5" style={{ fontSize: "clamp(2.5rem, 6vw, 4rem)", color: "rgb(var(--foreground))" }}>
-              Rohit <span className="gradient-text">Thakur</span>
-            </motion.h1>
+            <h1 style={{
+              fontFamily: "'Space Grotesk', system-ui, sans-serif",
+              fontSize: "clamp(2.5rem, 6vw, 4rem)",
+              fontWeight: 800,
+              lineHeight: 1.08,
+              color: "rgb(var(--text))",
+              marginBottom: "1rem",
+              letterSpacing: "-.02em",
+            }}>
+              Rohit{" "}
+              <span className="accent-text">Thakur</span>
+            </h1>
 
             {/* Title */}
-            <motion.div variants={fadeUp} className="text-lg font-semibold mb-5 h-7" style={{ color: "rgb(var(--muted))" }}>
-              <TypeAnimation
-                sequence={["Machine Learning Engineer", 2200, "Data Scientist", 2200, "AI Developer", 2200, "Computer Vision Engineer", 2200, "LLM & RAG Specialist", 2200]}
-                wrapper="span"
-                speed={55}
-                repeat={Infinity}
-                style={{ color: "#4f46e5" }}
-              />
-            </motion.div>
+            <p style={{ fontSize: "clamp(1rem, 2.5vw, 1.25rem)", fontWeight: 500, color: "rgb(var(--muted))", marginBottom: "1.25rem" }}>
+              AI &amp; Machine Learning Engineer
+            </p>
 
-            {/* Bio */}
-            <motion.p variants={fadeUp} className="text-base leading-relaxed mb-8 max-w-lg" style={{ color: "rgb(var(--muted))" }}>
-              {personalInfo.tagline}{" "}
-              <span className="inline-flex items-center gap-1 font-medium" style={{ color: "rgb(var(--foreground))" }}>
-                <MapPin size={13} style={{ color: "#4f46e5" }} /> Pune, India
-              </span>
-            </motion.p>
+            {/* Tagline */}
+            <p style={{ fontSize: "1rem", color: "rgb(var(--muted))", lineHeight: 1.75, maxWidth: 480, marginBottom: "2rem" }}>
+              Building intelligent systems using AI, Machine Learning, and Data Analytics.
+            </p>
 
             {/* CTAs */}
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-3 mb-8">
+            <div style={{ display: "flex", flexWrap: "wrap", gap: ".75rem", marginBottom: "2rem" }}>
               <a href={personalInfo.resumeUrl} target="_blank" rel="noopener noreferrer" id="hero-resume" className="btn-primary">
                 <Download size={15} /> View Resume
               </a>
-              <button onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })} id="hero-contact" className="btn-outline">
+              <button
+                id="hero-contact"
+                className="btn-ghost"
+                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              >
                 Contact Me <ArrowRight size={15} />
               </button>
-            </motion.div>
+            </div>
 
-            {/* Social icons */}
-            <motion.div variants={fadeUp} className="flex items-center gap-2.5">
-              {[
-                { href: personalInfo.github, Icon: GithubIcon, label: "GitHub", id: "hero-github" },
-                { href: personalInfo.linkedin, Icon: LinkedInIcon, label: "LinkedIn", id: "hero-linkedin" },
-                { href: `mailto:${personalInfo.email}`, Icon: Mail, label: "Email", id: "hero-email" },
-              ].map(({ href, Icon, label, id }) => (
-                <motion.a key={id} href={href} target="_blank" rel="noopener noreferrer" id={id} aria-label={label}
-                  className="w-9 h-9 flex items-center justify-center rounded-lg transition-all duration-200"
-                  style={{ border: "1px solid rgb(var(--border))", color: "rgb(var(--muted))", background: "rgb(var(--surface))" }}
-                  whileHover={{ scale: 1.08, borderColor: "#4f46e5", color: "#4f46e5" }}
-                  whileTap={{ scale: 0.94 }}
+            {/* Socials */}
+            <div style={{ display: "flex", gap: ".625rem" }}>
+              {socials.map(({ href, icon: Icon, label, id }) => (
+                <a
+                  key={id}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  id={id}
+                  aria-label={label}
+                  style={{
+                    width: 38, height: 38,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    background: "rgb(var(--surface))",
+                    border: "1px solid rgb(var(--border))",
+                    borderRadius: ".5rem",
+                    color: "rgb(var(--muted))",
+                    transition: "border-color .2s, color .2s",
+                    textDecoration: "none",
+                  }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#6366f1"; (e.currentTarget as HTMLElement).style.color = "#6366f1"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgb(var(--border))"; (e.currentTarget as HTMLElement).style.color = "rgb(var(--muted))"; }}
                 >
                   <Icon size={16} />
-                </motion.a>
+                </a>
               ))}
-              <span className="text-sm hidden sm:block ml-1" style={{ color: "rgb(var(--muted))" }}>rohitthakur121212@gmail.com</span>
-            </motion.div>
+              <span style={{ fontSize: ".8125rem", color: "rgb(var(--muted))", alignSelf: "center", marginLeft: ".25rem", display: "none" }} className="email-text">
+                {personalInfo.email}
+              </span>
+            </div>
           </motion.div>
 
-          {/* ── Right: Photo ── */}
+          {/* ── Photo ── */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.3 }}
-            className="order-1 lg:order-2 flex justify-center lg:justify-end"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            style={{ display: "flex", justifyContent: "center", order: 1 }}
+            className="hero-photo"
           >
-            <div className="relative">
-              {/* Outer decorative ring */}
-              <div className="absolute -inset-3 rounded-2xl" style={{ border: "1px solid rgba(79,70,229,0.15)" }} />
-
-              {/* Photo frame */}
-              <div
-                className="relative w-64 h-72 md:w-80 md:h-96 rounded-2xl overflow-hidden"
-                style={{
-                  border: "1px solid rgb(var(--border))",
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.12), 0 0 0 1px rgba(79,70,229,0.08)",
-                }}
-              >
+            <div style={{ position: "relative" }}>
+              {/* Photo */}
+              <div style={{
+                width: "min(280px, 70vw)",
+                height: "min(320px, 80vw)",
+                borderRadius: "1rem",
+                overflow: "hidden",
+                border: "1px solid rgb(var(--border))",
+                position: "relative",
+              }}>
                 <Image
                   src="/profile.png"
-                  alt="Rohit Thakur — ML Engineer & Data Scientist"
+                  alt="Rohit Thakur — AI & ML Engineer"
                   fill
                   priority
                   style={{ objectFit: "cover", objectPosition: "center top" }}
-                  sizes="(max-width: 768px) 256px, 320px"
+                  sizes="320px"
                 />
-                {/* Subtle gradient overlay at bottom */}
-                <div className="absolute bottom-0 left-0 right-0 h-24" style={{ background: "linear-gradient(to top, rgba(79,70,229,0.15), transparent)" }} />
               </div>
-
-              {/* Name card below photo */}
-              <div
-                className="absolute -bottom-4 left-4 right-4 px-4 py-2.5 rounded-xl"
-                style={{
-                  background: "rgb(var(--surface))",
-                  border: "1px solid rgb(var(--border))",
-                  boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-                }}
-              >
-                <p className="font-display font-bold text-sm" style={{ color: "rgb(var(--foreground))" }}>Rohit Thakur</p>
-                <p className="text-xs" style={{ color: "#4f46e5" }}>AI & ML Engineer · B.Tech VU · CGPA 8.42</p>
+              {/* Name card */}
+              <div style={{
+                position: "absolute",
+                bottom: "-1.25rem",
+                left: "1rem",
+                right: "1rem",
+                background: "rgb(var(--surface))",
+                border: "1px solid rgb(var(--border))",
+                borderRadius: ".75rem",
+                padding: ".75rem 1rem",
+              }}>
+                <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: ".9rem", color: "rgb(var(--text))", marginBottom: ".125rem" }}>Rohit Thakur</p>
+                <p style={{ fontSize: ".75rem", color: "#6366f1", fontWeight: 500 }}>AI &amp; ML Engineer · B.Tech VU · CGPA 8.42</p>
               </div>
-
-              {/* Skill badges — subtle, positioned neatly */}
-              {[
-                { label: "PyTorch", pos: { top: "1rem", right: "-3.5rem" } },
-                { label: "LangChain", pos: { bottom: "5rem", right: "-4rem" } },
-                { label: "OpenCV", pos: { top: "1rem", left: "-3.5rem" } },
-              ].map(({ label, pos }) => (
-                <motion.div
-                  key={label}
-                  className="absolute px-2.5 py-1 rounded-lg text-xs font-semibold hidden md:flex items-center"
-                  style={{
-                    ...pos,
-                    background: "rgb(var(--surface))",
-                    border: "1px solid rgb(var(--border))",
-                    color: "#4f46e5",
-                    boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
-                  }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1.2, duration: 0.4, type: "spring" }}
-                >
-                  {label}
-                </motion.div>
-              ))}
             </div>
           </motion.div>
         </div>
-
-        {/* Scroll hint */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.2 }}
-        >
-          <span className="text-xs" style={{ color: "rgb(var(--muted))" }}>Scroll down</span>
-          <motion.div className="w-px h-8" style={{ background: "linear-gradient(to bottom, rgba(79,70,229,0.5), transparent)" }} animate={{ scaleY: [0.3, 1, 0.3] }} transition={{ duration: 2, repeat: Infinity }} />
-        </motion.div>
       </div>
+
+      <style>{`
+        @media(min-width: 900px) {
+          .hero-grid { grid-template-columns: 1fr auto !important; }
+          .hero-text { order: 1 !important; }
+          .hero-photo { order: 2 !important; justify-content: flex-end !important; }
+          .email-text { display: inline !important; }
+        }
+      `}</style>
     </section>
   );
 }

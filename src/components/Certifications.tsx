@@ -1,93 +1,47 @@
 "use client";
-
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { certifications } from "@/lib/data";
-import { Award, Calendar, Building2, BadgeCheck } from "lucide-react";
+import { Award } from "lucide-react";
 
-const certColors: Record<string, string> = {
-  "IBM RAG and Agentic AI Specialization": "linear-gradient(135deg, #3b82f6, #6366f1)",
-  "IBM Full Stack Software Developer Professional Certificate": "linear-gradient(135deg, #7c3aed, #6056f5)",
-  ".NET Full Stack Developer Professional Certificate": "linear-gradient(135deg, #ec4899, #f43f5e)",
-  "Bring AI to Work Workshop": "linear-gradient(135deg, #10b981, #14b8a6)",
-  "HTML & CSS for Web Designers": "linear-gradient(135deg, #f97316, #f59e0b)",
-};
+const certs = [
+  { name: "IBM RAG and Agentic AI Specialization", issuer: "Coursera / IBM", year: "2025", color: "#6366f1" },
+  { name: "IBM Full Stack Software Developer", issuer: "Coursera / IBM", year: "Oct 2025", color: "#8b5cf6" },
+  { name: ".NET Full Stack Developer Professional Certificate", issuer: "Coursera", year: "2025", color: "#0ea5e9" },
+  { name: "Bring AI to Work Workshop", issuer: "Google Workspace", year: "Jun 2025", color: "#10b981" },
+  { name: "HTML & CSS for Web Designers", issuer: "Udemy", year: "Jan 2025", color: "#f59e0b" },
+];
 
 export default function Certifications() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="certifications" className="section-padding">
-      <div className="section-container" ref={ref}>
-        {/* Header */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="section-tag">
-            <BadgeCheck size={14} />
-            Certifications
-          </span>
-          <h2 className="section-title font-display">
-            Professional <span className="gradient-text">Credentials</span>
-          </h2>
-          <p className="section-subtitle mx-auto text-center">
-            Industry-recognised certifications validating expertise across AI, cloud, and full-stack development.
-          </p>
+    <section id="certifications" className="section" style={{ borderTop: "1px solid rgb(var(--border))" }}>
+      <div className="container" ref={ref}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5 }} style={{ marginBottom: "3rem" }}>
+          <p className="section-label">Certifications</p>
+          <h2 className="section-heading">Credentials</h2>
+          <p className="section-sub">Professional certifications demonstrating continuous learning in AI, cloud, and full-stack development.</p>
         </motion.div>
 
-        {/* Certs Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {certifications.map((cert, idx) => {
-            const bg = certColors[cert.name] || "linear-gradient(135deg, #6056f5, #7c3aed)";
-            return (
-              <motion.div
-                key={cert.name}
-                className="card relative overflow-hidden"
-                initial={{ opacity: 0, y: 25 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                whileHover={{ scale: 1.02, y: -4 }}
-              >
-                {/* Top bar */}
-                <div className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl" style={{ background: bg }} />
-
-                {/* Icon */}
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg mb-4"
-                  style={{ background: bg }}
-                >
-                  <Award size={22} className="text-white" />
+        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: ".875rem" }} className="certs-grid">
+          {certs.map((c, i) => (
+            <motion.div key={i} initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .4, delay: i * .08 }}>
+              <div className="card" style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1.125rem 1.25rem" }}>
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: `${c.color}15`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Award size={18} style={{ color: c.color }} />
                 </div>
-
-                {/* Content */}
-                <h3 className="font-display font-semibold text-base leading-snug mb-2">
-                  {cert.name}
-                </h3>
-
-                <div className="flex items-center gap-1.5 text-sm mb-1" style={{ color: "rgb(var(--muted))" }}>
-                  <Building2 size={13} style={{ color: "#7c7cfc" }} className="flex-shrink-0" />
-                  <span>{cert.issuer}</span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p style={{ fontSize: ".9375rem", fontWeight: 600, color: "rgb(var(--text))", marginBottom: ".125rem", lineHeight: 1.3 }}>{c.name}</p>
+                  <p style={{ fontSize: ".8125rem", color: "rgb(var(--muted))" }}>{c.issuer}</p>
                 </div>
-
-                <div className="flex items-center gap-1.5 text-sm" style={{ color: "rgb(var(--muted))" }}>
-                  <Calendar size={13} style={{ color: "#7c7cfc" }} className="flex-shrink-0" />
-                  <span>{cert.date}</span>
-                </div>
-
-                {/* Verified badge */}
-                <div className="absolute top-4 right-4 flex items-center gap-1 text-xs font-medium" style={{ color: "#10b981" }}>
-                  <BadgeCheck size={14} />
-                  Verified
-                </div>
-              </motion.div>
-            );
-          })}
+                <span style={{ fontSize: ".75rem", fontWeight: 600, color: c.color, background: `${c.color}15`, padding: ".2rem .625rem", borderRadius: 9999, whiteSpace: "nowrap" }}>{c.year}</span>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
+      <style>{`@media(min-width:768px){.certs-grid{grid-template-columns:1fr 1fr !important;}}`}</style>
     </section>
   );
 }

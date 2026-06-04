@@ -1,183 +1,85 @@
 "use client";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { Github, ExternalLink } from "lucide-react";
 
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
-import { projects } from "@/lib/data";
-import { ExternalLink, Bot, ShieldAlert, Eye, Droplets, FolderKanban } from "lucide-react";
-import { GithubIcon } from "@/components/icons";
-
-const iconMap: Record<string, React.ElementType> = {
-  Bot, ShieldAlert, Eye, Droplets,
-};
-
-const ALL_TAGS = ["All", "Machine Learning", "Data Science", "Data Analytics", "AI"];
+const projects = [
+  {
+    title: "RAG-Powered PDF Q&A Chatbot",
+    description: "End-to-end Retrieval-Augmented Generation pipeline that ingests PDFs, embeds content into FAISS vector store, and answers queries using HuggingFace LLMs. Tracked with MLflow, containerized with Docker.",
+    tech: ["LangChain", "FAISS", "HuggingFace", "Streamlit", "MLflow", "Docker"],
+    github: "https://github.com/rohitthakur264",
+    color: "#6366f1",
+  },
+  {
+    title: "Multimodal Hate Speech Detection & Audio Censoring",
+    description: "Multilingual (Hindi & English) hate speech detection using a fine-tuned XLM-RoBERTa on 15,000 synthetic samples. Includes real-time audio censoring pipeline deployed as a Gradio web app.",
+    tech: ["PyTorch", "XLM-RoBERTa", "Gradio", "Transformers", "Librosa"],
+    github: "https://github.com/rohitthakur264",
+    color: "#8b5cf6",
+  },
+  {
+    title: "CNN-Based Diabetic Retinopathy Detection (XAI)",
+    description: "CNN classifier achieving 91% test accuracy across 5 severity grades on 3,000+ retinal fundus images. Integrated Grad-CAM for explainability and deployed via Flask REST API.",
+    tech: ["PyTorch", "Grad-CAM", "Flask", "Scikit-learn", "OpenCV"],
+    github: "https://github.com/rohitthakur264",
+    color: "#0ea5e9",
+  },
+  {
+    title: "Water Sustainability Dashboard 🏆 1st Place",
+    description: "Won 1st place among 50+ teams at the World Water Day Hackathon. Built a complete data pipeline — ingestion, EDA, statistical modeling — and an interactive Plotly dashboard for water sustainability insights.",
+    tech: ["Python", "Pandas", "Plotly", "Time-Series", "EDA"],
+    github: "https://github.com/rohitthakur264",
+    color: "#10b981",
+  },
+];
 
 export default function Projects() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const [activeFilter, setActiveFilter] = useState("All");
-
-  const filtered =
-    activeFilter === "All"
-      ? projects
-      : projects.filter((p) => p.tags.includes(activeFilter));
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="projects" className="section-padding bg-[rgb(var(--surface))]">
-      <div className="section-container" ref={ref}>
-        {/* Header */}
-        <motion.div
-          className="text-center mb-10"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="section-tag">
-            <FolderKanban size={14} />
-            Projects
-          </span>
-          <h2 className="section-title font-display">
-            Featured <span className="gradient-text">Work</span>
-          </h2>
-          <p className="section-subtitle mx-auto text-center">
-            AI/ML systems built from research to production deployment.
-          </p>
+    <section id="projects" className="section" style={{ borderTop: "1px solid rgb(var(--border))" }}>
+      <div className="container" ref={ref}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5 }} style={{ marginBottom: "3rem" }}>
+          <p className="section-label">Projects</p>
+          <h2 className="section-heading">Featured Work</h2>
+          <p className="section-sub">Selected projects showcasing applied ML, deep learning, and production-ready AI systems.</p>
         </motion.div>
 
-        {/* Filter Tabs */}
-        <motion.div
-          className="flex flex-wrap justify-center gap-2 mb-12"
-          initial={{ opacity: 0, y: 10 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.2, duration: 0.5 }}
-        >
-          {ALL_TAGS.map((tag) => (
-            <motion.button
-              key={tag}
-              onClick={() => setActiveFilter(tag)}
-              id={`filter-${tag.toLowerCase().replace(/\s+/g, "-")}`}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
-                activeFilter === tag
-                  ? "bg-brand-500 text-white shadow-lg shadow-brand-500/30"
-                  : "glass text-[rgb(var(--muted))] hover:text-[rgb(var(--foreground))] hover:border-brand-500/30"
-              }`}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              {tag}
-            </motion.button>
-          ))}
-        </motion.div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1.25rem" }} className="projects-grid">
+          {projects.map((p, i) => (
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5, delay: i * .08 }}>
+              <div className="card" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+                {/* Top accent */}
+                <div style={{ height: 3, background: p.color, borderRadius: "4px 4px 0 0", margin: "-1.5rem -1.5rem 1.25rem", borderTopLeftRadius: ".875rem", borderTopRightRadius: ".875rem" }} />
 
-        {/* Project Cards Grid */}
-        <motion.div
-          layout
-          className="grid md:grid-cols-2 gap-6"
-        >
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project, idx) => {
-              const Icon = iconMap[project.icon] || Bot;
-              return (
-                <motion.article
-                  key={project.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.92 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.92 }}
-                  transition={{ duration: 0.4, delay: idx * 0.08 }}
-                  className="card hover:border-brand-500/30 group flex flex-col overflow-hidden"
-                >
-                  {/* Project Header / Banner */}
-                  <div
-                    className={`relative h-36 rounded-xl mb-5 bg-gradient-to-br ${project.gradient} flex items-center justify-center overflow-hidden`}
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.0625rem", color: "rgb(var(--text))", marginBottom: ".625rem", lineHeight: 1.3 }}>{p.title}</h3>
+                <p style={{ fontSize: ".875rem", color: "rgb(var(--muted))", lineHeight: 1.7, marginBottom: "1.25rem", flex: 1 }}>{p.description}</p>
+
+                {/* Tech stack */}
+                <div style={{ display: "flex", flexWrap: "wrap", gap: ".375rem", marginBottom: "1.25rem" }}>
+                  {p.tech.map(t => (
+                    <span key={t} className="pill">{t}</span>
+                  ))}
+                </div>
+
+                {/* Links */}
+                <div style={{ display: "flex", gap: ".625rem" }}>
+                  <a href={p.github} target="_blank" rel="noopener noreferrer"
+                    style={{ display: "inline-flex", alignItems: "center", gap: ".375rem", fontSize: ".8125rem", fontWeight: 500, color: "rgb(var(--muted))", textDecoration: "none", padding: ".375rem .75rem", border: "1px solid rgb(var(--border))", borderRadius: 6, transition: "color .2s, border-color .2s" }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#6366f1"; (e.currentTarget as HTMLElement).style.borderColor = "#6366f1"; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgb(var(--muted))"; (e.currentTarget as HTMLElement).style.borderColor = "rgb(var(--border))"; }}
                   >
-                    <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml,%3Csvg width=60 height=60 viewBox=0 0 60 60 xmlns=http://www.w3.org/2000/svg%3E%3Cg fill=none fill-rule=evenodd%3E%3Cg fill=%23ffffff fill-opacity=0.1%3E%3Cpath d=M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />
-                    <motion.div
-                      className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur flex items-center justify-center"
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                    >
-                      <Icon size={32} className="text-white" />
-                    </motion.div>
-                    {/* Tags */}
-                    <div className="absolute top-3 right-3 flex flex-wrap gap-1 justify-end">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-0.5 rounded-full text-xs font-medium bg-black/30 text-white/90 backdrop-blur"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex flex-col flex-1">
-                    <h3 className="font-display font-bold text-lg mb-2 group-hover:text-brand-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-[rgb(var(--muted))] leading-relaxed mb-4">
-                      {project.description}
-                    </p>
-
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {project.tech.map((t) => (
-                        <span
-                          key={t}
-                          className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-[rgb(var(--surface-2))] text-[rgb(var(--muted))] border border-[rgb(var(--border))]"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Highlights */}
-                    <ul className="space-y-1.5 mb-6">
-                      {project.highlights.map((h, i) => (
-                        <li key={i} className="flex gap-2 text-xs text-[rgb(var(--muted))]">
-                          <span className="w-1.5 h-1.5 rounded-full bg-brand-400 flex-shrink-0 mt-1.5" />
-                          {h}
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Action Buttons */}
-                    <div className="mt-auto flex gap-3">
-                      <motion.a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        id={`project-${project.id}-github`}
-                        className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium glass border border-[rgb(var(--border))] hover:border-brand-500/40 hover:text-brand-400 transition-all"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <GithubIcon size={14} />
-                        GitHub
-                      </motion.a>
-                      {project.demo && (
-                        <motion.a
-                          href={project.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          id={`project-${project.id}-demo`}
-                          className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-brand-500/10 text-brand-400 border border-brand-500/20 hover:bg-brand-500/20 transition-all"
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          <ExternalLink size={14} />
-                          Live Demo
-                        </motion.a>
-                      )}
-                    </div>
-                  </div>
-                </motion.article>
-              );
-            })}
-          </AnimatePresence>
-        </motion.div>
+                    <Github size={14} /> GitHub
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
+      <style>{`@media(min-width:768px){.projects-grid{grid-template-columns:1fr 1fr !important;}}`}</style>
     </section>
   );
 }

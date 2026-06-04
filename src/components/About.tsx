@@ -1,136 +1,69 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { about } from "@/lib/data";
-import { Lightbulb, Target, Zap, CheckCircle2, User } from "lucide-react";
 
 const stats = [
-  { label: "AI/ML Projects", value: "4+" },
-  { label: "Internship Roles", value: "3" },
-  { label: "Students Mentored", value: "200+" },
-  { label: "Hackathon Wins", value: "1st 🏆" },
+  { value: "8.42", label: "CGPA / 10.0" },
+  { value: "3+",   label: "Internships"  },
+  { value: "4+",   label: "Projects"     },
+  { value: "5+",   label: "Certifications" },
 ];
 
 export default function About() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="about" className="section-padding" style={{ background: "rgb(var(--surface))" }}>
-      <div className="section-container" ref={ref}>
-        {/* Header */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="section-tag">
-            <User size={14} />
-            About Me
-          </span>
-          <h2 className="section-title font-display">
-            Turning Data into{" "}
-            <span className="gradient-text">Intelligence</span>
-          </h2>
-          <p className="section-subtitle mx-auto text-center">
-            A passionate AI/ML engineer driven by curiosity and impact.
-          </p>
-        </motion.div>
+    <section id="about" className="section" style={{ borderTop: "1px solid rgb(var(--border))" }}>
+      <div className="container" ref={ref}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "3rem", alignItems: "start" }} className="about-grid">
 
-        {/* Stats Row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              className="card text-center"
-              initial={{ opacity: 0, y: 25 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
-              <div className="font-display text-3xl md:text-4xl font-bold gradient-text mb-1">
-                {stat.value}
-              </div>
-              <div className="text-sm" style={{ color: "rgb(var(--muted))" }}>{stat.label}</div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Summary */}
-          <motion.div
-            className="space-y-6"
-            initial={{ opacity: 0, y: 25 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="card">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg" style={{ background: "linear-gradient(135deg, #6056f5, #7c3aed)" }}>
-                  <User size={18} className="text-white" />
-                </div>
-                <h3 className="font-display font-semibold text-lg">Professional Summary</h3>
-              </div>
-              <p style={{ color: "rgb(var(--muted))" }} className="leading-relaxed">{about.summary}</p>
-            </div>
-
-            <div className="card">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg" style={{ background: "linear-gradient(135deg, #3b82f6, #06b6d4)" }}>
-                  <Target size={18} className="text-white" />
-                </div>
-                <h3 className="font-display font-semibold text-lg">Career Objective</h3>
-              </div>
-              <p style={{ color: "rgb(var(--muted))" }} className="leading-relaxed">{about.objective}</p>
+          {/* Left */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .55 }}>
+            <p className="section-label">About</p>
+            <h2 className="section-heading">Who I Am</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <p className="section-sub">
+                I'm Rohit Thakur, a final-year B.Tech student in Artificial Intelligence &amp; Machine Learning at Vishwakarma University, Pune (CGPA 8.42). I build end-to-end AI systems — from data pipelines to production-ready ML models.
+              </p>
+              <p className="section-sub">
+                My work spans computer vision, NLP, RAG-based LLM systems, and data analytics. I've collaborated with defense research teams, contributed to open-source projects, and won hackathons applying data-driven solutions to real-world problems.
+              </p>
+              <p className="section-sub">
+                I'm passionate about the intersection of AI research and practical engineering — turning complex models into reliable, scalable products.
+              </p>
             </div>
           </motion.div>
 
-          {/* Interests & Strengths */}
-          <motion.div
-            className="space-y-6"
-            initial={{ opacity: 0, y: 25 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-          >
-            <div className="card">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg" style={{ background: "linear-gradient(135deg, #ec4899, #f43f5e)" }}>
-                  <Lightbulb size={18} className="text-white" />
+          {/* Right: Stats */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .55, delay: .15 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+              {stats.map((s, i) => (
+                <div key={i} className="card" style={{ textAlign: "center", padding: "1.5rem 1rem" }}>
+                  <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "2rem", fontWeight: 800, color: "#6366f1", lineHeight: 1 }}>{s.value}</p>
+                  <p style={{ fontSize: ".8125rem", color: "rgb(var(--muted))", marginTop: ".375rem", fontWeight: 500 }}>{s.label}</p>
                 </div>
-                <h3 className="font-display font-semibold text-lg">Technical Interests</h3>
-              </div>
-              <ul className="space-y-2">
-                {about.interests.map((interest) => (
-                  <li key={interest} className="flex items-center gap-2" style={{ color: "rgb(var(--muted))" }}>
-                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "linear-gradient(135deg, #ec4899, #f43f5e)" }} />
-                    {interest}
-                  </li>
-                ))}
-              </ul>
+              ))}
             </div>
 
-            <div className="card">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg" style={{ background: "linear-gradient(135deg, #10b981, #14b8a6)" }}>
-                  <Zap size={18} className="text-white" />
+            {/* Info list */}
+            <div style={{ marginTop: "1rem", display: "flex", flexDirection: "column", gap: ".625rem" }}>
+              {[
+                ["🎓", "B.Tech AI & ML — Vishwakarma University, Pune"],
+                ["📍", "Pune, Maharashtra, India"],
+                ["📧", "rohitthakur121212@gmail.com"],
+                ["🐙", "github.com/rohitthakur264"],
+              ].map(([icon, text]) => (
+                <div key={text} style={{ display: "flex", gap: ".75rem", alignItems: "center", fontSize: ".875rem", color: "rgb(var(--muted))" }}>
+                  <span>{icon}</span><span>{text}</span>
                 </div>
-                <h3 className="font-display font-semibold text-lg">Core Strengths</h3>
-              </div>
-              <ul className="space-y-2">
-                {about.strengths.map((strength) => (
-                  <li key={strength} className="flex items-center gap-2" style={{ color: "rgb(var(--muted))" }}>
-                    <CheckCircle2 size={15} className="flex-shrink-0" style={{ color: "#10b981" }} />
-                    {strength}
-                  </li>
-                ))}
-              </ul>
+              ))}
             </div>
           </motion.div>
         </div>
       </div>
+      <style>{`@media(min-width:768px){.about-grid{grid-template-columns:1fr 1fr !important;}}`}</style>
     </section>
   );
 }

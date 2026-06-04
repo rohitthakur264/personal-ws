@@ -63,7 +63,7 @@ export default function About() {
           </motion.div>
         </div>
       </div>
-      <style>{`@media(min-width:768px){.about-grid{grid-template-columns:1fr 1fr !important;}}`}</style>
+
     </section>
   );
 }

@@ -179,3 +179,21 @@ body {
   body { background: white !important; color: black !important; }
   #resume-content { box-shadow: none !important; border-radius: 0 !important; padding: 1rem !important; }
 }
+
+/* ── Component responsive overrides ─────────────────── */
+@media(min-width: 768px) {
+  .desktop-nav { display: flex !important; }
+  .mobile-menu-btn { display: none !important; }
+  #nav-resume { display: inline-flex !important; }
+  .projects-grid { grid-template-columns: 1fr 1fr !important; }
+  .about-grid { grid-template-columns: 1fr 1fr !important; }
+}
+
+@media(min-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr auto !important; }
+  .hero-text { order: 1 !important; }
+  .hero-photo { order: 2 !important; justify-content: flex-end !important; }
+  .email-text { display: inline !important; }
+  .edu-grid { grid-template-columns: 1fr 1fr !important; }
+}
+

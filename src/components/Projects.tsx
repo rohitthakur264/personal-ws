@@ -1,7 +1,8 @@
 "use client";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Github, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
+import { GithubIcon } from "@/components/icons";
 
 const projects = [
   {
@@ -71,7 +72,7 @@ export default function Projects() {
                     onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#6366f1"; (e.currentTarget as HTMLElement).style.borderColor = "#6366f1"; }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgb(var(--muted))"; (e.currentTarget as HTMLElement).style.borderColor = "rgb(var(--border))"; }}
                   >
-                    <Github size={14} /> GitHub
+                    <GithubIcon size={14} /> GitHub
                   </a>
                 </div>
               </div>
@@ -79,7 +80,7 @@ export default function Projects() {
           ))}
         </div>
       </div>
-      <style>{`@media(min-width:768px){.projects-grid{grid-template-columns:1fr 1fr !important;}}`}</style>
+
     </section>
   );
 }

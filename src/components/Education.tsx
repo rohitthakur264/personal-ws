@@ -63,7 +63,7 @@ export default function Education() {
           </motion.div>
         </div>
       </div>
-      <style>{`@media(min-width:900px){.edu-grid{grid-template-columns:1fr 1fr !important;}}`}</style>
+
     </section>
   );
 }

@@ -2,7 +2,7 @@
 
 export default function ResumeClient() {
   return (
-    <div style={{ minHeight: "100vh", background: "rgb(var(--background))", color: "rgb(var(--foreground))", fontFamily: "Inter, system-ui, sans-serif", padding: "2rem 1rem" }}>
+    <div style={{ minHeight: "100vh", background: "rgb(var(--bg))", color: "rgb(var(--text))", fontFamily: "Inter, system-ui, sans-serif", padding: "2rem 1rem" }}>
 
       {/* Action bar */}
       <div className="no-print" style={{ maxWidth: "860px", margin: "0 auto 1.5rem", display: "flex", justifyContent: "flex-end", gap: "0.75rem" }}>

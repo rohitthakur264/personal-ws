@@ -115,13 +115,6 @@ export default function Navbar() {
         </div>
       )}
 
-      <style>{`
-        @media(min-width:768px) {
-          .desktop-nav { display:flex !important; }
-          .mobile-menu-btn { display:none !important; }
-          #nav-resume { display:inline-flex !important; }
-        }
-      `}</style>
     </header>
   );
 }

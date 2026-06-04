@@ -1,5 +1,14 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+"use client";
+
+import { Mail } from "lucide-react";
+import { GithubIcon, LinkedInIcon } from "@/components/icons";
 import { personalInfo } from "@/lib/data";
+
+const icons = [
+  { href: personalInfo.github, Icon: GithubIcon, label: "GitHub" },
+  { href: personalInfo.linkedin, Icon: LinkedInIcon, label: "LinkedIn" },
+  { href: `mailto:${personalInfo.email}`, Icon: Mail, label: "Email" },
+];
 
 export default function Footer() {
   return (
@@ -10,11 +19,7 @@ export default function Footer() {
           <p style={{ fontSize: ".8125rem", color: "rgb(var(--muted))" }}>AI & Machine Learning Engineer · Pune, India</p>
         </div>
         <div style={{ display: "flex", gap: ".75rem", alignItems: "center" }}>
-          {[
-            { href: personalInfo.github, Icon: Github, label: "GitHub" },
-            { href: personalInfo.linkedin, Icon: Linkedin, label: "LinkedIn" },
-            { href: `mailto:${personalInfo.email}`, Icon: Mail, label: "Email" },
-          ].map(({ href, Icon, label }) => (
+          {icons.map(({ href, Icon, label }) => (
             <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
               style={{ width: 34, height: 34, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgb(var(--border))", borderRadius: 8, color: "rgb(var(--muted))", transition: "color .2s, border-color .2s", textDecoration: "none" }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#6366f1"; (e.currentTarget as HTMLElement).style.borderColor = "#6366f1"; }}

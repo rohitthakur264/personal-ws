@@ -2,12 +2,13 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, Download, Mail } from "lucide-react";
+import { GithubIcon, LinkedInIcon } from "@/components/icons";
 import { personalInfo } from "@/lib/data";
 
 const socials = [
-  { href: personalInfo.github, icon: Github, label: "GitHub", id: "hero-github" },
-  { href: personalInfo.linkedin, icon: Linkedin, label: "LinkedIn", id: "hero-linkedin" },
+  { href: personalInfo.github, icon: GithubIcon, label: "GitHub", id: "hero-github" },
+  { href: personalInfo.linkedin, icon: LinkedInIcon, label: "LinkedIn", id: "hero-linkedin" },
   { href: `mailto:${personalInfo.email}`, icon: Mail, label: "Email", id: "hero-email" },
 ];
 
@@ -125,7 +126,7 @@ export default function Hero() {
             style={{ display: "flex", justifyContent: "center", order: 1 }}
             className="hero-photo"
           >
-            <div style={{ position: "relative" }}>
+            <div style={{ position: "relative", marginBottom: "2.5rem" }}>
               {/* Photo */}
               <div style={{
                 width: "min(280px, 70vw)",
@@ -154,23 +155,19 @@ export default function Hero() {
                 border: "1px solid rgb(var(--border))",
                 borderRadius: ".75rem",
                 padding: ".75rem 1rem",
+                boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.45), 0 8px 10px -6px rgba(0, 0, 0, 0.45)",
               }}>
                 <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: ".9rem", color: "rgb(var(--text))", marginBottom: ".125rem" }}>Rohit Thakur</p>
-                <p style={{ fontSize: ".75rem", color: "#6366f1", fontWeight: 500 }}>AI &amp; ML Engineer · B.Tech VU · CGPA 8.42</p>
+                <p style={{ fontSize: ".75rem", color: "#6366f1", fontWeight: 500, lineHeight: 1.3 }}>
+                  AI &amp; ML Engineer <br />
+                  B.Tech VU &bull; CGPA 8.42
+                </p>
               </div>
             </div>
           </motion.div>
         </div>
       </div>
 
-      <style>{`
-        @media(min-width: 900px) {
-          .hero-grid { grid-template-columns: 1fr auto !important; }
-          .hero-text { order: 1 !important; }
-          .hero-photo { order: 2 !important; justify-content: flex-end !important; }
-          .email-text { display: inline !important; }
-        }
-      `}</style>
     </section>
   );
 }

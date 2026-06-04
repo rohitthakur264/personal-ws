@@ -8,7 +8,7 @@ import { GithubIcon, LinkedInIcon } from "@/components/icons";
 import { personalInfo } from "@/lib/data";
 import { useEffect, useRef } from "react";
 
-// Subtle canvas particle background
+// Subtle canvas particle background (Enhanced visibility for "web" effect)
 function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
@@ -23,7 +23,8 @@ function ParticleCanvas() {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
       pts.length = 0;
-      const n = Math.floor((canvas.width * canvas.height) / 18000);
+      // Denser particle network (changed divider from 18000 to 10000 for more particles)
+      const n = Math.floor((canvas.width * canvas.height) / 10000);
       for (let i = 0; i < n; i++)
         pts.push({
           x: Math.random() * canvas.width,
@@ -46,16 +47,18 @@ function ParticleCanvas() {
           const d = Math.hypot(p.x - q.x, p.y - q.y);
           if (d < 140) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(99, 102, 241, ${0.07 * (1 - d / 140)})`;
-            ctx.lineWidth = 0.6;
+            // Increased line opacity from 0.07 to 0.16 and width to 0.8 for a highly visible web
+            ctx.strokeStyle = `rgba(99, 102, 241, ${0.16 * (1 - d / 140)})`;
+            ctx.lineWidth = 0.8;
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
             ctx.stroke();
           }
         }
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(99, 102, 241, 0.18)";
+        // Increased dot size from 1.2 to 1.8 and opacity from 0.18 to 0.35
+        ctx.arc(p.x, p.y, 1.8, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(99, 102, 241, 0.35)";
         ctx.fill();
       }
       animId = requestAnimationFrame(draw);
@@ -156,12 +159,13 @@ export default function Hero() {
           }}
           className="hero-grid"
         >
-          {/* ── Text (Left Column) ── */}
+          {/* ── Text (Left Column / Bottom on Mobile Stack) ── */}
           <motion.div
             variants={stagger}
             initial="hidden"
             animate="visible"
             className="hero-text"
+            style={{ order: 2 }}
           >
             {/* Available badge */}
             <motion.div
@@ -311,16 +315,16 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* ── Photo (Right Column) ── */}
+          {/* ── Photo (Right Column / Top on Mobile Stack) ── */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number], delay: 0.2 }}
-            style={{ display: "flex", justifyContent: "center" }}
+            style={{ display: "flex", justifyContent: "center", order: 1 }}
             className="hero-photo"
           >
             <div style={{ position: "relative", marginBottom: "2.5rem" }}>
-              {/* Outer decorative ring */}
+              {/* Outer decorative ring (Circle shape to match circular pfp) */}
               <div
                 style={{
                   position: "absolute",
@@ -328,18 +332,18 @@ export default function Hero() {
                   bottom: "-0.75rem",
                   left: "-0.75rem",
                   right: "-0.75rem",
-                  borderRadius: "1.25rem",
+                  borderRadius: "50%",
                   border: "1px solid rgba(99, 102, 241, 0.15)",
                   pointerEvents: "none",
                 }}
               />
 
-              {/* Photo frame */}
+              {/* Photo frame (Perfect Circle shape pfp) */}
               <div
                 style={{
                   width: "min(280px, 70vw)",
-                  height: "min(320px, 80vw)",
-                  borderRadius: "1rem",
+                  height: "min(280px, 70vw)", // Kept square so border-radius 50% forms a perfect circle
+                  borderRadius: "50%",
                   overflow: "hidden",
                   border: "1px solid rgb(var(--border))",
                   position: "relative",
@@ -354,32 +358,34 @@ export default function Hero() {
                   style={{ objectFit: "cover", objectPosition: "center top" }}
                   sizes="320px"
                 />
-                {/* Subtle gradient overlay at bottom */}
+                {/* Subtle gradient overlay at bottom of the circle */}
                 <div
                   style={{
                     position: "absolute",
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    height: "6rem",
+                    height: "5rem",
                     background: "linear-gradient(to top, rgba(99, 102, 241, 0.15), transparent)",
                     pointerEvents: "none",
                   }}
                 />
               </div>
 
-              {/* Name card */}
+              {/* Name card (Centered overlay at the bottom of the circle) */}
               <div
                 style={{
                   position: "absolute",
-                  bottom: "-1.25rem",
-                  left: "1rem",
-                  right: "1rem",
+                  bottom: "-1rem",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  width: "85%",
                   background: "rgb(var(--surface))",
                   border: "1px solid rgb(var(--border))",
                   borderRadius: ".75rem",
                   padding: ".75rem 1rem",
                   boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.45), 0 8px 10px -6px rgba(0, 0, 0, 0.45)",
+                  textAlign: "center",
                 }}
               >
                 <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: ".9rem", color: "rgb(var(--text))", marginBottom: ".125rem" }}>
@@ -391,10 +397,10 @@ export default function Hero() {
                 </p>
               </div>
 
-              {/* Skill badges — subtle, positioned neatly */}
+              {/* Skill badges — subtle, positioned neatly around the circular frame */}
               {[
                 { label: "PyTorch", pos: { top: "1rem", right: "-3.5rem" } },
-                { label: "LangChain", pos: { bottom: "5rem", right: "-4rem" } },
+                { label: "LangChain", pos: { bottom: "4.5rem", right: "-4rem" } },
                 { label: "OpenCV", pos: { top: "1rem", left: "-3.5rem" } },
               ].map(({ label, pos }) => (
                 <motion.div

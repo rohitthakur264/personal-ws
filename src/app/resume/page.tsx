@@ -240,21 +240,6 @@ export default function ResumePage() {
           </ul>
         </Section>
       </div>
-
-      <style>{`
-        @media print {
-          .no-print { display: none !important; }
-          body { background: white !important; }
-          #resume-content {
-            box-shadow: none !important;
-            border-radius: 0 !important;
-            padding: 1.5rem 2rem !important;
-            margin: 0 !important;
-            max-width: 100% !important;
-          }
-        }
-      `}</style>
-    </div>
   );
 }
 

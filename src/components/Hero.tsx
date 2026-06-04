@@ -23,7 +23,7 @@ function ParticleCanvas() {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
       pts.length = 0;
-      // Denser particle network (changed divider from 18000 to 10000 for more particles)
+      // Denser particle network (divider is 10000 for more particles)
       const n = Math.floor((canvas.width * canvas.height) / 10000);
       for (let i = 0; i < n; i++)
         pts.push({
@@ -47,7 +47,7 @@ function ParticleCanvas() {
           const d = Math.hypot(p.x - q.x, p.y - q.y);
           if (d < 140) {
             ctx.beginPath();
-            // Increased line opacity from 0.07 to 0.16 and width to 0.8 for a highly visible web
+            // line opacity is 0.16 and width is 0.8 for a highly visible web
             ctx.strokeStyle = `rgba(99, 102, 241, ${0.16 * (1 - d / 140)})`;
             ctx.lineWidth = 0.8;
             ctx.moveTo(p.x, p.y);
@@ -56,7 +56,7 @@ function ParticleCanvas() {
           }
         }
         ctx.beginPath();
-        // Increased dot size from 1.2 to 1.8 and opacity from 0.18 to 0.35
+        // dot size is 1.8 and opacity is 0.35
         ctx.arc(p.x, p.y, 1.8, 0, Math.PI * 2);
         ctx.fillStyle = "rgba(99, 102, 241, 0.35)";
         ctx.fill();
@@ -270,13 +270,15 @@ export default function Hero() {
               style={{ display: "flex", gap: ".625rem" }}
             >
               {socials.map(({ href, icon: Icon, label, id }) => (
-                <a
+                <motion.a
                   key={id}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
                   id={id}
                   aria-label={label}
+                  whileHover={{ scale: 1.12, rotate: 4 }}
+                  whileTap={{ scale: 0.94 }}
                   style={{
                     width: 38, height: 38,
                     display: "flex",
@@ -299,7 +301,7 @@ export default function Hero() {
                   }}
                 >
                   <Icon size={16} />
-                </a>
+                </motion.a>
               ))}
               <span
                 style={{
@@ -323,8 +325,13 @@ export default function Hero() {
             style={{ display: "flex", justifyContent: "center", order: 1 }}
             className="hero-photo"
           >
-            <div style={{ position: "relative", marginBottom: "2.5rem" }}>
-              {/* Outer decorative ring (Circle shape to match circular pfp) */}
+            {/* Continuously floating photo container */}
+            <motion.div
+              animate={{ y: [-8, 8, -8] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              style={{ position: "relative", marginBottom: "2.5rem" }}
+            >
+              {/* Outer decorative ring (Circle shape) */}
               <div
                 style={{
                   position: "absolute",
@@ -338,11 +345,11 @@ export default function Hero() {
                 }}
               />
 
-              {/* Photo frame (Perfect Circle shape pfp) */}
+              {/* Photo frame (Circle) */}
               <div
                 style={{
                   width: "min(280px, 70vw)",
-                  height: "min(280px, 70vw)", // Kept square so border-radius 50% forms a perfect circle
+                  height: "min(280px, 70vw)",
                   borderRadius: "50%",
                   overflow: "hidden",
                   border: "1px solid rgb(var(--border))",
@@ -358,7 +365,7 @@ export default function Hero() {
                   style={{ objectFit: "cover", objectPosition: "center top" }}
                   sizes="320px"
                 />
-                {/* Subtle gradient overlay at bottom of the circle */}
+                {/* Subtle gradient overlay */}
                 <div
                   style={{
                     position: "absolute",
@@ -372,7 +379,7 @@ export default function Hero() {
                 />
               </div>
 
-              {/* Name card (Centered overlay at the bottom of the circle) */}
+              {/* Name card */}
               <div
                 style={{
                   position: "absolute",
@@ -397,12 +404,12 @@ export default function Hero() {
                 </p>
               </div>
 
-              {/* Skill badges — subtle, positioned neatly around the circular frame */}
+              {/* Floating Skill Badges (Animates on load, then floats continuously in mid-air!) */}
               {[
-                { label: "PyTorch", pos: { top: "1rem", right: "-3.5rem" } },
-                { label: "LangChain", pos: { bottom: "4.5rem", right: "-4rem" } },
-                { label: "OpenCV", pos: { top: "1rem", left: "-3.5rem" } },
-              ].map(({ label, pos }) => (
+                { label: "PyTorch", pos: { top: "1rem", right: "-3.5rem" }, floatY: [-4, 4], dur: 4.2 },
+                { label: "LangChain", pos: { bottom: "4.5rem", right: "-4rem" }, floatY: [-3, 5], dur: 4.8 },
+                { label: "OpenCV", pos: { top: "1rem", left: "-3.5rem" }, floatY: [-5, 3], dur: 4.5 },
+              ].map(({ label, pos, floatY, dur }, index) => (
                 <motion.div
                   key={label}
                   className="skill-badge-floating"
@@ -419,14 +426,22 @@ export default function Hero() {
                     pointerEvents: "none",
                     ...pos,
                   }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6, duration: 0.3, type: "spring" }}
+                  initial={{ opacity: 0, scale: 0.8, y: 0 }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    y: [floatY[0], floatY[1], floatY[0]]
+                  }}
+                  transition={{
+                    opacity: { delay: 0.6, duration: 0.3 },
+                    scale: { delay: 0.6, duration: 0.3, type: "spring" },
+                    y: { duration: dur, repeat: Infinity, ease: "easeInOut", delay: 0.8 + index * 0.1 }
+                  }}
                 >
                   {label}
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

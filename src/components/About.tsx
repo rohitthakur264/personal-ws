@@ -2,6 +2,9 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { GraduationCap, MapPin, Mail } from "lucide-react";
+import { GithubIcon } from "@/components/icons";
+
 
 const stats = [
   { value: "8.42", label: "CGPA / 10.0" },
@@ -50,13 +53,14 @@ export default function About() {
             {/* Info list */}
             <div style={{ marginTop: "1rem", display: "flex", flexDirection: "column", gap: ".625rem" }}>
               {[
-                ["🎓", "B.Tech AI & ML — Vishwakarma University, Pune"],
-                ["📍", "Pune, Maharashtra, India"],
-                ["📧", "rohitthakur121212@gmail.com"],
-                ["🐙", "github.com/rohitthakur264"],
-              ].map(([icon, text]) => (
+                { icon: GraduationCap, text: "B.Tech AI & ML — Vishwakarma University, Pune" },
+                { icon: MapPin,        text: "Pune, Maharashtra, India" },
+                { icon: Mail,          text: "rohitthakur121212@gmail.com" },
+                { icon: GithubIcon,    text: "github.com/rohitthakur264" },
+              ].map(({ icon: Icon, text }) => (
                 <div key={text} style={{ display: "flex", gap: ".75rem", alignItems: "center", fontSize: ".875rem", color: "rgb(var(--muted))" }}>
-                  <span>{icon}</span><span>{text}</span>
+                  <Icon size={14} style={{ color: "#6366f1", flexShrink: 0 }} />
+                  <span>{text}</span>
                 </div>
               ))}
             </div>

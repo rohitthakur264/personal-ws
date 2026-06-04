@@ -10,14 +10,14 @@ const projects = [
     title: "RAG-Powered PDF Q&A Chatbot",
     description: "Built an end-to-end Retrieval-Augmented Generation (RAG) pipeline that ingests documents, embeds text into a FAISS vector database, and queries HuggingFace LLMs. Integrated MLflow for runtime metrics tracking and containerized with Docker.",
     tech: ["LangChain", "FAISS", "HuggingFace", "Streamlit", "MLflow", "Docker"],
-    github: "https://github.com/rohitthakur264",
+    github: "https://github.com/rohitthakur264/RAG",
     live: null,
   },
   {
     title: "Hate Speech Detection & Audio Censoring",
     description: "Engineered a multimodal multilingual classifier using a fine-tuned XLM-RoBERTa model trained on 15,000 synthetic samples. Developed a real-time audio analysis and bleeping pipeline using Librosa, deploying as a Gradio web application.",
     tech: ["PyTorch", "XLM-RoBERTa", "Gradio", "Transformers", "Librosa"],
-    github: "https://github.com/rohitthakur264",
+    github: "https://github.com/rohitthakur264/Hate_speech",
     live: null,
   },
   {

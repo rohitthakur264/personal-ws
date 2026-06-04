@@ -32,7 +32,7 @@ export default function Skills() {
   return (
     <section id="skills" className="section" style={{ borderTop: "1px solid rgb(var(--border))" }}>
       <div className="container" ref={ref}>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5 }} style={{ marginBottom: "3rem" }}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .4 }} style={{ marginBottom: "3rem" }}>
           <p className="section-label">Skills</p>
           <h2 className="section-heading">Technical Expertise</h2>
           <p className="section-sub">Core technologies and tools I use to build, train, and deploy AI systems.</p>
@@ -40,7 +40,7 @@ export default function Skills() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
           {groups.map((g, i) => (
-            <motion.div key={i} initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .45, delay: i * .08 }}>
+            <motion.div key={i} initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .4, delay: i * .08 }}>
               <p style={{ fontSize: ".8125rem", fontWeight: 600, color: "rgb(var(--muted))", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: ".875rem" }}>{g.category}</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: ".5rem" }}>
                 {g.skills.map(s => <span key={s} className="pill">{s}</span>)}

@@ -18,7 +18,7 @@ export default function LoadingScreen() {
           className="loading-screen flex-col gap-6"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
         >
           {/* Animated logo */}
           <motion.div

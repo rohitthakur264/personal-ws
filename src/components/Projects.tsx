@@ -42,7 +42,7 @@ export default function Projects() {
   return (
     <section id="projects" className="section" style={{ borderTop: "1px solid rgb(var(--border))" }}>
       <div className="container" ref={ref}>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5 }} style={{ marginBottom: "3rem" }}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .4 }} style={{ marginBottom: "3rem" }}>
           <p className="section-label">Projects</p>
           <h2 className="section-heading">Featured Work</h2>
           <p className="section-sub">Selected projects showcasing applied ML, deep learning, and production-ready AI systems.</p>
@@ -50,7 +50,7 @@ export default function Projects() {
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1.25rem" }} className="projects-grid">
           {projects.map((p, i) => (
-            <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5, delay: i * .08 }}>
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .4, delay: i * .08 }}>
               <div className="card" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
                 {/* Top accent */}
                 <div style={{ height: 3, background: p.color, borderRadius: "4px 4px 0 0", margin: "-1.5rem -1.5rem 1.25rem", borderTopLeftRadius: ".875rem", borderTopRightRadius: ".875rem" }} />

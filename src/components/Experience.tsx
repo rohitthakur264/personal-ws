@@ -52,7 +52,7 @@ export default function Experience() {
   return (
     <section id="experience" className="section" style={{ borderTop: "1px solid rgb(var(--border))" }}>
       <div className="container" ref={ref}>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5 }} style={{ marginBottom: "3rem" }}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .4 }} style={{ marginBottom: "3rem" }}>
           <p className="section-label">Experience</p>
           <h2 className="section-heading">Professional Journey</h2>
           <p className="section-sub">Real-world AI/ML engineering across defense research, consulting, and academia.</p>
@@ -60,7 +60,7 @@ export default function Experience() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           {jobs.map((job, i) => (
-            <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5, delay: i * .1 }}>
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .4, delay: i * .08 }}>
               <div className="card" style={{ borderLeft: `3px solid ${job.color}` }}>
                 <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-start", gap: ".75rem", marginBottom: ".75rem" }}>
                   <div>

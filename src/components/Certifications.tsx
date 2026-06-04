@@ -18,7 +18,7 @@ export default function Certifications() {
   return (
     <section id="certifications" className="section" style={{ borderTop: "1px solid rgb(var(--border))" }}>
       <div className="container" ref={ref}>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5 }} style={{ marginBottom: "3rem" }}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .4 }} style={{ marginBottom: "3rem" }}>
           <p className="section-label">Certifications</p>
           <h2 className="section-heading">Credentials</h2>
           <p className="section-sub">Professional certifications demonstrating continuous learning in AI, cloud, and full-stack development.</p>

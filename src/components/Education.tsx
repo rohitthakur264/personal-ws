@@ -10,7 +10,7 @@ export default function Education() {
   return (
     <section id="education" className="section" style={{ borderTop: "1px solid rgb(var(--border))" }}>
       <div className="container" ref={ref}>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5 }} style={{ marginBottom: "3rem" }}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .4 }} style={{ marginBottom: "3rem" }}>
           <p className="section-label">Education</p>
           <h2 className="section-heading">Academic Background</h2>
         </motion.div>
@@ -18,7 +18,7 @@ export default function Education() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1.25rem" }} className="edu-grid">
 
           {/* Degree */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5 }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .4 }}>
             <div className="card" style={{ borderLeft: "3px solid #6366f1" }}>
               <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
                 <div style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(99,102,241,.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
@@ -43,7 +43,7 @@ export default function Education() {
           </motion.div>
 
           {/* Achievement */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .5, delay: .1 }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .4, delay: .1 }}>
             <div className="card" style={{ borderLeft: "3px solid #f59e0b" }}>
               <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
                 <div style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(245,158,11,.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>

@@ -15,7 +15,7 @@ export default function Contact() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }} 
           animate={inView ? { opacity: 1, y: 0 } : {}} 
-          transition={{ duration: .5 }} 
+          transition={{ duration: .4 }} 
           style={{ marginBottom: "3rem", textAlign: "center" }}
         >
           <p className="section-label">Contact</p>
@@ -30,7 +30,7 @@ export default function Contact() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }} 
             animate={inView ? { opacity: 1, y: 0 } : {}} 
-            transition={{ duration: .5 }}
+            transition={{ duration: .4 }}
             className="card"
             style={{ display: "flex", flexDirection: "column", gap: "1.5rem", padding: "2rem" }}
           >

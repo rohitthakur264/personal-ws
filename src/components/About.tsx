@@ -23,7 +23,7 @@ export default function About() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "3rem", alignItems: "start" }} className="about-grid">
 
           {/* Left */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .55 }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.4 }}>
             <p className="section-label">About</p>
             <h2 className="section-heading">Who I Am</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
@@ -40,7 +40,7 @@ export default function About() {
           </motion.div>
 
           {/* Right: Stats */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: .55, delay: .15 }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.4, delay: 0.1 }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
               {stats.map((s, i) => (
                 <div key={i} className="card" style={{ textAlign: "center", padding: "1.5rem 1rem" }}>

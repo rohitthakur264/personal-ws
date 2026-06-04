@@ -28,7 +28,7 @@ export default function Achievements() {
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4 }}
         >
           <span className="section-tag">
             <Trophy size={14} />
@@ -51,7 +51,7 @@ export default function Achievements() {
                 className="card text-center relative overflow-hidden"
                 initial={{ opacity: 0, y: 25 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
-                transition={{ duration: 0.5, delay: idx * 0.12 }}
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
                 whileHover={{ scale: 1.03, y: -6 }}
               >
                 {/* Icon */}
